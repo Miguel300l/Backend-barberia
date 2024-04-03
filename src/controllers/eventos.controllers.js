@@ -70,6 +70,27 @@ export const verEventos = async (req, res) => {
 };
 
 
+export const eliminarEvento = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Busca el evento por su ID y elimínalo de la base de datos
+    const eventoEliminado = await Eventos.findByIdAndDelete(id);
+
+    if (!eventoEliminado) {
+      // Si no se encuentra el evento con el ID proporcionado, devuelve un mensaje de error
+      return res.status(404).json({ message: "Evento no encontrado" });
+    }
+
+    // Si se elimina correctamente, devuelve un mensaje de éxito
+    res.status(200).json({ message: "Evento eliminado correctamente" });
+  } catch (error) {
+    console.log(error);
+    // Si ocurre algún error, devuelve un mensaje de error del servidor
+    return res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+
 export const actualizarEvento = async (req, res) => {
   try {
     const { tipo, titulo, fecha_inicio, fecha_final, descripcion, lugar } = req.body;

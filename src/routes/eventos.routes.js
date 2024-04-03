@@ -1,6 +1,6 @@
 import { Router } from 'express';
 // controllers
-import { actualizarEvento, crearEvento, verEventos} from '../controllers/eventos.controllers.js';
+import { actualizarEvento, crearEvento, verEventos,eliminarEvento} from '../controllers/eventos.controllers.js';
 // Verificaciones
 import { verificarToken, verificarAdministrador } from '../middlewares/validateToken.js';
 // imagenes
@@ -16,6 +16,6 @@ const inputImg = upload.fields([{ name: 'eventoImg', maxCount: 1 },{ name: 'pdf'
 router.post("/crearEventos", verificarToken, verificarAdministrador, inputImg, crearEvento);
 router.get("/verEventos", verEventos);
 router.put("/actualizarEvento/:id", verificarToken, verificarAdministrador,inputImg, actualizarEvento);
-  
+router.delete("/eliminarEvento/:id", eliminarEvento);
 
 export default router;
