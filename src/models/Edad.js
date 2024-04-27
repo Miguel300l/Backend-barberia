@@ -1,13 +1,13 @@
 import { Schema, model } from 'mongoose';
 
-const programaSchema = new Schema(
+const edadSchema = new Schema(
     {
         nombre:{
             type: String,
             required: true
         },
         ficha:{
-            type: Number,
+            type: String,
             required: true,
             unique:true
         },
@@ -34,4 +34,4 @@ const programaSchema = new Schema(
     }
 )
 
-export default model("Programas", programaSchema)
+export default model("Programas", edadSchema)

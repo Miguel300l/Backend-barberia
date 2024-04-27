@@ -5,7 +5,7 @@ import morgan from 'morgan';
 import { createRoles } from './libs/createRoles.js';
 
 import usuarios from './routes/usuarios.routes.js';
-import programa from './routes/programa.routes.js';
+import edad from './routes/edad.routes.js';
 import eventos from './routes/eventos.routes.js';
 import solicitudes from './routes/solicitudes.routes.js';
 import notificacion from './routes/notificacion.routes.js';
@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 createRoles()
 
 app.use(usuarios);
-app.use(programa);
+app.use(edad);
 app.use(eventos);
 app.use(solicitudes);
 app.use(notificacion);

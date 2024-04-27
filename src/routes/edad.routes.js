@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { crearPrograma, verProgramas } from '../controllers/programas.controllers.js';
+import { crearPrograma, verProgramas } from '../controllers/edades.controllers.js';
 import { verificarToken, verificarAdministrador } from '../middlewares/validateToken.js';
 
 const router = Router();

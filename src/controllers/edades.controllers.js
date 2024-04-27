@@ -1,4 +1,4 @@
-import Programa from "../models/Programa.js";
+import Programa from "../models/Edad.js";
 
 export const crearPrograma = async (req, res) => {
   try {
