@@ -118,10 +118,10 @@ export const actualizarProfesional = async (req, res) => {
   try {
     const { nombres, apellidos, correo, genero, numTelefono, profesion } =
       req.body;
-      const { id } = req.params;
+    const { id } = req.params;
 
-      
-      if (req.files.imgProfesional) {
+
+    if (req.files.imgProfesional) {
       let idImg = null;
       let urlImg = null;
 
@@ -166,7 +166,7 @@ export const actualizarProfesional = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json("Error en el servidor");
-  }
+  }
 };
 
 export const actualizarAprendiz = async (req, res) => {
@@ -174,42 +174,40 @@ export const actualizarAprendiz = async (req, res) => {
     console.log(req.body);
     const { nombres, apellidos, correo, genero, numTelefono } = req.body;
     const { id } = req.params;
-   
-if(req.files.imgAprendiz){
 
-  let idImg = null;
-  let urlImg = null;
+    if (req.files.imgAprendiz) {
 
-  if (req.files && req.files.imgAprendiz) { 
-    const fotoAprendiz = await cloudinary.uploader.upload(req.files.imgAprendiz[0].path);
-    idImg = fotoAprendiz.public_id;
-    urlImg = fotoAprendiz.secure_url;
-  }
+      let idImg = null;
+      let urlImg = null;
 
-  const usuario = await Usuario.findByIdAndUpdate(id, {
-    
-      'perfil.idImg': idImg,
-      'perfil.urlImg': urlImg,
-      'nombres': nombres,
-      'apellidos': apellidos,
-      'correo': correo,
-      'genero': genero,
-      'numTelefono': numTelefono
-    
-  }, { new: true });
-}else{
+      if (req.files && req.files.imgAprendiz) {
+        const fotoAprendiz = await cloudinary.uploader.upload(req.files.imgAprendiz[0].path);
+        idImg = fotoAprendiz.public_id;
+        urlImg = fotoAprendiz.secure_url;
+      }
 
-  const usuario = await Usuario.findByIdAndUpdate(id, {
-    'nombres': nombres,
-    'apellidos': apellidos,
-    'correo': correo,
-    'genero': genero,
-    'numTelefono': numTelefono
-  
-}, { new: true });
-}
+      const usuario = await Usuario.findByIdAndUpdate(id, {
 
+        'perfil.idImg': idImg,
+        'perfil.urlImg': urlImg,
+        'nombres': nombres,
+        'apellidos': apellidos,
+        'correo': correo,
+        'genero': genero,
+        'numTelefono': numTelefono
 
+      }, { new: true });
+    } else {
+
+      const usuario = await Usuario.findByIdAndUpdate(id, {
+        'nombres': nombres,
+        'apellidos': apellidos,
+        'correo': correo,
+        'genero': genero,
+        'numTelefono': numTelefono
+
+      }, { new: true });
+    }
     res.status(200).json("Usuario actualizado");
   } catch (error) {
     console.log(error);
@@ -217,6 +215,30 @@ if(req.files.imgAprendiz){
   }
 }
 
+export const actualizarAdministrador = async (req, res) => {
+  try {
+    const { nombres, apellidos, correo, password, genero } = req.body;
+    const { id } = req.params;
+    const admin = await Usuario.findByIdAndUpdate(
+      id,
+      {
+        nombres,
+        apellidos,
+        correo,
+        password,
+        genero,
+      },
+      { new: true }
+    );
+    if (!admin) {
+      return res.status(404).json("Administrador no encontrado");
+    }
+    res.status(200).json("Administrador actualizado");
+  } catch (error) {
+    console.error(error);
+    res.status(500).json("Error en el servidor");
+  }
+};
 
 export const loginUsuarioProfesional = async (req, res) => {
   try {
@@ -514,7 +536,7 @@ export const inhabilitarUsuario = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json("Error en el servidor");
-  }
+  }
 };
 export const habilitarUsuario = async (req, res) => {
   try {
@@ -534,7 +556,7 @@ export const habilitarUsuario = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json("Error en el servidor");
-  }
+  }
 };
 
 export const inhabilitarProfesional = async (req, res) => {
@@ -597,7 +619,7 @@ export const verProfesionales = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json(" Error en el servidor ");
-  }
+  }
 };
 
 

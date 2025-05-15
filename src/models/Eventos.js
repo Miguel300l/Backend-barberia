@@ -32,7 +32,7 @@ const eventosSchema = new Schema(
         },
         video: {
             type: String,
-            required: true
+            required: false
         },
         fecha_inicio: {
             type: Date,

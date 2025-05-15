@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { verificarToken, verificarAdministrador } from '../middlewares/validateToken.js';
 import { validarCamposRegisterAprendiz, validarCamposRegisterProfesional, validarCamposAuch } from '../middlewares/validateAuchts.js';
-import { registroUsuarioAprendiz, registroUsuarioAdministrador, registroUsuarioProfesional, loginUsuarioProfesional, loginUsuarioAprendiz, loginUsuarioAdministrador, solicitudAccesoProfesional, aceptarProfesional, verUsuario, verUsuariosProfesionales, rechazarProfesional, solicitudRechazadasProfesional, verUsuarios, actualizarAprendiz, actualizarProfesional, inhabilitarUsuario, habilitarUsuario, inhabilitarProfesional, habilitarProfesional, verProfesionales} from '../controllers/usuarios.controllers.js';
+import { registroUsuarioAprendiz, registroUsuarioAdministrador, registroUsuarioProfesional, loginUsuarioProfesional, loginUsuarioAprendiz, loginUsuarioAdministrador, solicitudAccesoProfesional, aceptarProfesional, verUsuario, verUsuariosProfesionales, rechazarProfesional, solicitudRechazadasProfesional, verUsuarios, actualizarAprendiz, actualizarAdministrador, actualizarProfesional, inhabilitarUsuario, habilitarUsuario, inhabilitarProfesional, habilitarProfesional, verProfesionales} from '../controllers/usuarios.controllers.js';
 
 // imagenes
 import multer from 'multer';
@@ -23,6 +23,7 @@ router.put("/actualizarProfesional/:id",inputProfesional,actualizarProfesional)
 const inputAprendiz = upload.fields([{name: 'imgAprendiz'}]);
 router.post("/registrarAprendiz", inputAprendiz, validarCamposRegisterAprendiz,  registroUsuarioAprendiz);
 router.put("/actualizarAprendiz/:id",inputAprendiz,actualizarAprendiz)
+router.put('/actualizarAdministrador/:id', actualizarAdministrador)
 
 router.post("/loginProfesional", validarCamposAuch, loginUsuarioProfesional);
 router.post("/loginAprendiz", validarCamposAuch, loginUsuarioAprendiz);
