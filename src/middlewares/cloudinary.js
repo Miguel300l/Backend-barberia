@@ -10,6 +10,6 @@ cloudinary.config({
 export const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
-        folder: 'Carros'
+        folder: 'images'
     }
 });

@@ -1,11 +1,10 @@
 import cloudinary from "cloudinary";
 import Eventos from "../models/Eventos.js";
 
-
 export const crearEvento = async (req, res) => {
   try {
-    const { titulo, descripcion, fecha_inicio, fecha_final, tipo } = req.body;
-    if (!titulo || !descripcion || !fecha_inicio || !fecha_final || !tipo) {
+    const { titulo, descripcion, fecha_inicio, fecha_final, tipo, video } = req.body;
+    if (!titulo || !descripcion || !fecha_inicio || !tipo || !video ) {
       return res.status(400).json("Todos los datos son requeridos");
     }
 
@@ -21,6 +20,7 @@ export const crearEvento = async (req, res) => {
       urlImg = fotoEvento.secure_url;
     }
 
+    // Manejo del PDF
     let idPdf = null;
     let urlPdf = null;
 
