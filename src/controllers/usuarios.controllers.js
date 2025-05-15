@@ -1,6 +1,7 @@
 import Usuario from "../models/Usuario.js";
 import Roles from "../models/Roles.js";
 import jwt from "jsonwebtoken";
+import bcrypt from 'bcryptjs';
 import { JWT_SECRET } from "../config.js";
 import cloudinary from 'cloudinary'
 
@@ -219,20 +220,30 @@ export const actualizarAdministrador = async (req, res) => {
   try {
     const { nombres, apellidos, correo, password, genero } = req.body;
     const { id } = req.params;
-    const admin = await Usuario.findByIdAndUpdate(
-      id,
-      {
-        nombres,
-        apellidos,
-        correo,
-        password,
-        genero,
-      },
-      { new: true }
-    );
+
+    const usuarioExistente = await Usuario.findOne({ correo, _id: { $ne: id } });
+    if (usuarioExistente) {
+      return res.status(400).json("El correo ya está en uso");
+    }
+
+    const updatedFields = {
+      nombres,
+      apellidos,
+      correo,
+      genero,
+    };
+
+    if (password && password.trim() !== "") {
+      const salt = await bcrypt.genSalt(10);
+      updatedFields.password = await bcrypt.hash(password, salt);
+    }
+
+    const admin = await Usuario.findByIdAndUpdate(id, updatedFields, { new: true });
+
     if (!admin) {
       return res.status(404).json("Administrador no encontrado");
     }
+
     res.status(200).json("Administrador actualizado");
   } catch (error) {
     console.error(error);
